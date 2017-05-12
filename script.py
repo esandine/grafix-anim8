@@ -4,8 +4,6 @@ from matrix import *
 from draw import *
 import sys
 
-num_frames = -1
-basename = -1
 """======== first_pass( commands, symbols ) ==========
 
   Checks the commands array for any animation commands
@@ -23,13 +21,13 @@ basename = -1
 
   jdyrlandweaver
   ==================== """
-def first_pass( commands ):
+def first_pass(basename, frames, commands ):
     vary = False
     for command in commands:
         if command[0] == 'basename':
             basename = command[1]
         elif command[0] == 'frames':
-            num_frames = command[1]
+            frames = command[1]
         elif command[0] == 'vary':
             vary = True
         else:
@@ -37,10 +35,10 @@ def first_pass( commands ):
     if basename == -1:
         print 'basename set to some_default_value'
         basename = 'some_default_value'
-    if num_frames == -1 and vary:
+    if frames == -1 and vary:
         print 'no num_frames you sillyhead!'
         sys.exit()
-    return
+    return basename, frames
             
 
 
@@ -69,6 +67,8 @@ def run(filename):
     """
     This function runs an mdl script
     """
+    basename = -1
+    frames = -1
     color = [255, 255, 255]
     tmp = new_matrix()
     ident( tmp )
@@ -86,9 +86,11 @@ def run(filename):
     screen = new_screen()
     tmp = []
     step = 0.1
-    first_pass(commands);
+    rets = first_pass(basename, frames, commands);
+    basename = rets[0]
+    frames = rets[1]
+    print basename, frames
     for command in commands:
-        print command
         c = command[0]
         args = command[1:]
 
