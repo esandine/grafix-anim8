@@ -59,8 +59,21 @@ def first_pass(basename, frames, commands ):
   dictionary corresponding to the given knob with the
   appropirate value. 
   ===================="""
-def second_pass( commands, num_frames ):
-    pass
+def second_pass( commands,  frames ):
+    table = [frames]
+    for t in table:
+        t = {}
+    i = 0
+    for command in commands:
+        if command[0] == "vary":
+            if command[2] <= command[3] and command[4]>=0 and command[5] < frames:
+                i=command[1]
+                while i <= command[3]:
+                    table[i][command[1]] = command[4]+(command[5]-command[4])*(i-command[2])/command[3]
+                    i+=1
+                else:
+                    print " vary syntax error: \n"+command
+                    sys.exit()
 
 
 def run(filename):
@@ -90,6 +103,8 @@ def run(filename):
     basename = rets[0]
     frames = rets[1]
     print basename, frames
+    d = second_pass(commands,frames)
+    print d
     for command in commands:
         c = command[0]
         args = command[1:]
