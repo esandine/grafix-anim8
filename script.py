@@ -60,20 +60,26 @@ def first_pass(basename, frames, commands ):
   appropirate value. 
   ===================="""
 def second_pass( commands,  frames ):
-    table = [frames]
-    for t in table:
-        t = {}
+    table = []
+    i = 0
+    while i < frames:
+        table.append({})
+        i+=1
+        
+    print table
     i = 0
     for command in commands:
         if command[0] == "vary":
-            if command[2] <= command[3] and command[4]>=0 and command[5] < frames:
-                i=command[1]
-                while i <= command[3]:
-                    table[i][command[1]] = command[4]+(command[5]-command[4])*(i-command[2])/command[3]
+            if command[2] <= command[3] and command[4]>=0 and command[5] < frames:                
+                i=0
+                while i <= command[3]-command[2]:
+                    val = command[4]+ i/float(command[3]-command[2])*(command[5]-command[4])
+                    table[i][command[2]] = val
                     i+=1
-                else:
-                    print " vary syntax error: \n"+command
-                    sys.exit()
+                    print val
+            else:
+                print " vary syntax error: \n"+str(command)
+                sys.exit()
 
 
 def run(filename):
