@@ -66,21 +66,20 @@ def second_pass( commands,  frames ):
         table.append({})
         i+=1
         
-    print table
     i = 0
     for command in commands:
         if command[0] == "vary":
             if command[2] <= command[3] and command[4]>=0 and command[5] < frames:                
                 i=0
                 while i <= command[3]-command[2]:
-                    val = command[4]+ i/float(command[3]-command[2])*(command[5]-command[4])
-                    table[i][command[2]] = val
+                    val = command[4]+i/float(command[3]-command[2])*(command[5]-command[4])
+                    d=table[i+command[2]]
+                    d[command[1]] = val
                     i+=1
-                    print val
             else:
                 print " vary syntax error: \n"+str(command)
                 sys.exit()
-
+    return table
 
 def run(filename):
     """
