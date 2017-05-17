@@ -133,7 +133,11 @@ def run(filename):
                 draw_polygons(tmp, screen, color)
                 tmp = []
             elif c == 'move':
-                tmp = make_translate(args[0], args[1], args[2])
+                if(len(args)>3):
+                    knob = d[i][args[3]]
+                else:
+                    knob = 1
+                tmp = make_translate(args[0]*knob, args[1]*knob, args[2]*knob)
                 matrix_mult(stack[-1], tmp)
                 stack[-1] = [x[:] for x in tmp]
                 tmp = []
@@ -148,16 +152,20 @@ def run(filename):
                 stack[-1] = [x[:] for x in tmp]
                 tmp = []
             elif c == 'rotate':
-                theta = args[1] * (math.pi/180)
+                if(len(args)>2):
+                    knob = d[i][args[2]]
+                else:
+                    knob = 1
+                theta = (args[1] * (math.pi/180))*knob
                 if args[0] == 'x':
                     tmp = make_rotX(theta)
                 elif args[0] == 'y':
                     tmp = make_rotY(theta)
                 else:
                     tmp = make_rotZ(theta)
-                    matrix_mult( stack[-1], tmp )
-                    stack[-1] = [ x[:] for x in tmp]
-                    tmp = []
+                matrix_mult( stack[-1], tmp )
+                stack[-1] = [ x[:] for x in tmp]
+                tmp = []
             elif c == 'push':
                 stack.append([x[:] for x in stack[-1]] )
             elif c == 'pop':
