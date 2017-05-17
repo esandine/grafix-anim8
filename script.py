@@ -164,10 +164,8 @@ def run(filename):
                 stack.pop()
             elif c == 'display':
                 display(screen)
-            elif c == 'save':
-                est = "anim/basename"+"%03d"%i+".png"
-                print "Saving" + est
-                save_extension(screen, basename)
+        fname = "anim/"+basename+"%03d"%i+".png"
+        save_extension(screen, fname)
         tmp = new_matrix()
         ident(tmp)
         stack = [ [x[:] for x in tmp] ]
