@@ -133,7 +133,7 @@ def run(filename):
                 draw_polygons(tmp, screen, color)
                 tmp = []
             elif c == 'move':
-                if(len(args)>3):
+                if(len(args)>3) and args[3]!=None:
                     knob = d[i][args[3]]
                 else:
                     knob = 1
