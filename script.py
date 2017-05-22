@@ -179,4 +179,4 @@ def run(filename):
         stack = [ [x[:] for x in tmp] ]
         screen = new_screen()
         i+=1
-        
+    make_animation(basename)
